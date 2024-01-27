@@ -22,14 +22,14 @@ router.get('/:id', async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
   try {
-    const prodSQL = await Category.findByPk(req.params.id, {
+    const catSQL = await Category.findByPk(req.params.id, {
       include: [{
         model: Product,
         required: false,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       }]
     });
-    res.status(200).json(prodSQL);
+    res.status(200).json(catSQL);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -44,12 +44,34 @@ router.post('/', (req, res) => {
   */
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
+  try {
+    const catSQL = await Category.update({category_name: req.body.category_name} ,{
+      where: {
+        id: req.params.id
+      }
+    });
+    //Test if we send 400/No ID found or 200/Information
+    catSQL==0 ? res.status(400).json({"status": "No ID found."}) : res.status(200).json(catSQL);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
+  try {
+    const catSQL = await Category.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    //Test if we send 404/No ID found or 200/Information
+    catSQL==0 ? res.status(400).json({"status": "No ID found."}) : res.status(200).json(catSQL);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
