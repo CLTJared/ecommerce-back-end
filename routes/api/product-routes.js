@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       include: [{
         model: Category,
-        required: true,
+        required: true, //INNER JOIN
       }]
     });
     res.status(200).json(prodSQL);
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       include: [{
         model: Category,
-        required: true,
+        required: true, //INNER JOIN
       }]
     });
     res.status(200).json(prodSQL);
