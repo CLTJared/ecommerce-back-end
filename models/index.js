@@ -14,6 +14,7 @@ Category.hasMany(Product)
 Product.belongsToMany(ProductTag, {
   through: {
     model: ProductTag,
+    unique: false,
   }
 })
 
@@ -21,6 +22,7 @@ Product.belongsToMany(ProductTag, {
 Tag.belongsToMany(ProductTag, {
   through: {
     model: ProductTag,
+    unique: false,
   }
 })
 
