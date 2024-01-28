@@ -35,13 +35,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new category
+  try {
+    const [name, created] = await Category.findOrCreate({
+      where: {
+        "category_name": req.body.category_name
+      }
+    })
+    created ? res.status(200).json(name) : res.status(400).json({"status": "Invalid Input."})
+  } catch (err) {
+    res.status(500).json(err)
+  }
 
-  /*
-    const jane = await User.create({ firstName: "Jane", lastName: "Doe" });
-    console.log("Jane's auto-generated ID:", jane.id);
-  */
 });
 
 router.put('/:id', async (req, res) => {
