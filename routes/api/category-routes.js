@@ -19,14 +19,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+  // FindByPK, using Primary Key to search
   try {
     const catSQL = await Category.findByPk(req.params.id, {
       include: [{
-        model: Product,
+        model: Product, // Include Product model
         required: false,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'], // Include only these columns from database
       }]
     });
     res.status(200).json(catSQL);
@@ -38,7 +37,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new category
   try {
-    const [name, created] = await Category.findOrCreate({
+    const [name, created] = await Category.findOrCreate({ //Utilizing findOrCreate instead of Create so that we can determine if the category_name already exist and return
       where: {
         "category_name": req.body.category_name
       }
