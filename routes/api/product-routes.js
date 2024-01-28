@@ -5,13 +5,11 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', async (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
   try {
-    const prodSQL = await Product.findAll({
+    const prodSQL = await Product.findAll({ // find all in Product model
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       include: [{
-        model: Category,
+        model: Category, // Include Category model
         required: true, //INNER JOIN
       }]
     });
@@ -24,13 +22,12 @@ router.get('/', async (req, res) => {
 
 // get one product
 router.get('/:id', async (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  // Find a single product by PrimaryKey
   try {
     const prodSQL = await Product.findByPk(req.params.id, {
-      attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      attributes: ['id', 'product_name', 'price', 'stock', 'category_id'], // Include these columns from database
       include: [{
-        model: Category,
+        model: Category, // Including Category model
         required: true, //INNER JOIN
       }]
     });
@@ -117,8 +114,19 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    const prodSQL = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    //Test if we send 400/Invalid or 200/Information
+    prodSQL==0 ? res.status(400).json({"status": "Invalid User Input."}) : res.status(200).json(prodSQL);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

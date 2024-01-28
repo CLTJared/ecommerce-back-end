@@ -57,8 +57,8 @@ router.put('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    //Test if we send 400/No ID found or 200/Information
-    catSQL==0 ? res.status(400).json({"status": "No ID found."}) : res.status(200).json(catSQL);
+    //Test if we send 400/Invalid Input or 200/Information
+    catSQL==0 ? res.status(400).json({"status": "Invalid Input"}) : res.status(200).json(catSQL);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -72,8 +72,8 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    //Test if we send 404/No ID found or 200/Information
-    catSQL==0 ? res.status(400).json({"status": "No ID found."}) : res.status(200).json(catSQL);
+    //Test if we send 400/Invalid Input or 200/Information
+    catSQL==0 ? res.status(400).json({"status": "Invalid Input"}) : res.status(200).json(catSQL);
   } catch (err) {
     res.status(500).json(err);
   }
