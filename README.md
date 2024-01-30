@@ -13,6 +13,10 @@ Create an `.env` file in the root directory or copy the `.env.EXAMPLE` file and 
     ```bash
     npm i
     ```
+3. Seed Database
+    ```bash
+    npm run seed
+    ```
 
 2. Start program
     ```bash
@@ -28,4 +32,4 @@ Create an `.env` file in the root directory or copy the `.env.EXAMPLE` file and 
 ## Resources
 [GitHub Repository](https://github.com/CLTJared/ecommerce-back-end)
 
-[Demo Video](#)
+[Demo Video](https://app.screencastify.com/v3/watch/J4BTT68qnNezaBevjWtR)
