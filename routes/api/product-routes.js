@@ -9,9 +9,13 @@ router.get('/', async (req, res) => {
     const prodSQL = await Product.findAll({ // find all in Product model
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
       include: [{
-        model: Category, // Include Category model
+        model: Category, //Include Category model
         required: true, //INNER JOIN
-      }]
+      },
+    {
+      model: Tag, //Include Tag model
+      required: true, //INNER JOIN
+    }]
     });
     res.status(200).json(prodSQL);
   } catch (err) {
@@ -27,9 +31,14 @@ router.get('/:id', async (req, res) => {
     const prodSQL = await Product.findByPk(req.params.id, {
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id'], // Include these columns from database
       include: [{
-        model: Category, // Including Category model
+        model: Category, //Including Category model
         required: true, //INNER JOIN
-      }]
+      },
+      {
+        model: Tag, //Including Tag model
+        required: true, //INNER Join
+      }
+    ]
     });
     res.status(200).json(prodSQL);
   } catch (err) {
